@@ -40,8 +40,9 @@ public class LoginPage {
         btnLogin.click();
     }
 
-    public EOSLPage logIntoTomorrowLand(String username, String password) {
+    public EOSLPage logIntoTomorrowLand(String username, String password) throws InterruptedException {
         String decryptedPassword = Generic.getDecryptedPassword(password);
+        Thread.sleep(3000);
         enterUserName(username);
         enterPassword(decryptedPassword);
         clickLoginBtn();

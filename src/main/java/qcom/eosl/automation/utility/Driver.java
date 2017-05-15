@@ -2,11 +2,13 @@ package qcom.eosl.automation.utility;
 
 import static qcom.eosl.automation.utility.AutomationConstants.DRIVER_URL_NAME;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Reporter;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Driver {
     private static WebDriver driver;
@@ -18,18 +20,13 @@ public class Driver {
      */
     public static synchronized WebDriver setUpManagerLogin() throws Exception {
         String urlName = DRIVER_URL_NAME;
-        // ReadObjects object = new ReadObjects();
-        // driver = object.getDriver();
-        WebDriver driver = new FirefoxDriver();
-        // String appURL = object.getPropertyValues();
-        try {
-            // driver = BrowserConfiguration.getBrowser();
-            driver.get(urlName);
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            Reporter.log("Exception occurred in setUpManagerLogin" + e);
-        }
+        DesiredCapabilities cap = DesiredCapabilities.firefox();
+        cap.setPlatform(Platform.ANY);
+        URL url = new URL("http://tomorrowland-jenkins.qualcomm.com:4444/wd/hub");
+        WebDriver driver = new RemoteWebDriver(url, cap);
+        driver.get(urlName);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return driver;
     }
 

@@ -31,7 +31,8 @@ public class EoslTest {
     }
 
     @Test
-    public void validateSiteLocationOfHost() throws IOException {
+    public void validateSiteLocationOfHost() throws IOException, InterruptedException {
+        Thread.sleep(3000);
         objEoslPage.searchHost("lasher.qualcomm.com");
         Assert.assertEquals(objEoslPage.getDataFromGrid("lasher.qualcomm.com", "site"), "sandiego",
                 "Mismatch in site.");
